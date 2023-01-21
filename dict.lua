@@ -1,3 +1,5 @@
+local test = require('lib.test')
+
 -- Functions for manipulating dictionary tables.
 local M = {}
 
@@ -18,5 +20,27 @@ function M.values(dict_table)
     end
     return values
 end
+
+test.it("lists all keys", function()
+    local person = {
+        name = "Jan",
+        age = 23
+    }
+
+    local keys = M.keys(person)
+
+    assert(#keys == 2)
+end)
+
+test.it("lists all values", function()
+    local person = {
+        name = "Jan",
+        age = 23
+    }
+
+    local values = M.values(person)
+
+    assert(#values == 2)
+end)
 
 return M

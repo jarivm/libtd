@@ -1,22 +1,25 @@
+
 local M = {}
 
-local function pretty_print(obj, level)
-  if type(obj) == 'table' then
-      local s = '{ \n'
-      for k, v in pairs(obj) do
-         if type(k) ~= 'number' then k = '"'..tostring(k)..'"' end
-         s = s .. string.rep('\t', level) .. '['..k..'] = ' .. pretty_print(v, level + 1) .. ',\n'
+local function pretty_print(value, level)
+  if type(value) == 'table' then
+      local s = '{\n'
+      for key, value in pairs(value) do
+         if type(key) ~= 'number' then key = '"'..tostring(key)..'"' end
+         s = s .. string.rep('\t', level) .. '['..key..'] = ' .. pretty_print(value, level + 1) .. ',\n'
       end
       return s .. string.rep('\t', level - 1) .. '}'
+   elseif type(value) == 'string' then
+       return '"' .. value .. '"'
    else
-      return tostring(obj)
-   end
+      return tostring(value)
+  end
 end
 
 function M.log(...)
     local args = {...}
     for i, arg in ipairs(args) do
-        args[i] = pretty_print(arg, 1) .. '\n'
+        args[i] = pretty_print(arg, 1)
     end
 
     print(unpack(args))
